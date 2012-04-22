@@ -27,7 +27,7 @@ config.authentication.enabled= false;
   
 // db related settings
 config.db = {};
-config.db.url = 'mongodb://localhost:27017/smartkid';
+config.db.url = 'mongodb://localhost:27017/todos';
 
 // export the config
 module.exports = config;
