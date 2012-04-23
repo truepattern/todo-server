@@ -20,6 +20,8 @@ config.server.port = process.env.PORT || 8080;
 config.server.modules = [
   'todos'
 ];
+config.server.jsonp = true;
+
 
 // auth related settings
 config.authentication = {};

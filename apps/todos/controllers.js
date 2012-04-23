@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Todo = mongoose.model('Todo');
+var _ = require('underscore');
 
 exports.index = function(req, res){
   Todo.find({}, function(err, objs) {
@@ -12,21 +13,15 @@ exports.index = function(req, res){
 };
 
 exports.new = function(req, res){
-  var content = req.query['content'];
-  var done = req.query['done'];
-  var order = req.query['order'];
-  var id = req.query['id'];
-  createOrUpdate(id, content, done, order, function(err, newTodo) {
+  var id;
+  createOrUpdate(req, id, function(err, newTodo) {
       if(!err) res.send(newTodo);
     });
 };
 
 exports.create = function(req, res){
-  var content = req.body['content'];
-  var done = req.body['done'];
-  var order = req.body['order'];
-  var id = req.body['id'];
-  createOrUpdate(id, content, done, order, function(err, newTodo) {
+  var id;
+  createOrUpdate(req, id, function(err, newTodo) {
       if(!err) res.send(newTodo);
     });
 };
@@ -36,18 +31,15 @@ exports.show = function(req, res){
 };
 
 exports.update = function(req, res){
-  var newcontent = req.query['content'] || req.body['content'];
-  var newdone = req.query['done'] || req.body['done'];
-  var neworder = req.query['order'] || req.body['order'];
-  var id = req.query['id'] || req.body['id'];
   if(req.todo) {
-    createOrUpdate(id, newcontent, newdone, neworder, function(err, newTodo) {
+    createOrUpdate(req, req.todo, function(err, newTodo) {
         if(!err) res.send(newTodo);
       });
   }
 };
 
 exports.destroy = function(req, res){
+  console.log('destroy called');
   if(req.todo) {
     var todo = req.todo;
     console.log('removed: ' + todo);
@@ -72,23 +64,29 @@ function convertOutput(obj) {
   return o;
 }
 
-function createOrUpdate(id, content, done, order, cb) {
-  var todoObj;
-  if(id) {
-    Todo.findById(id, function(err, obj) {
-        if(!err) {
-          todoObj=obj;
-          if(content) todoObj.content = content;
-          if(done) todoObj.done = done;
-          if(order) todoObj.order = order;
-          console.log(' updating :' + todoObj);
-          todoObj.save(function(err) { cb(err, convertOutput(todoObj)); });
-        }
-      });
-  } else {
-    todoObj = new Todo( {content:content, done: done, order: order} );
-    console.log(' creating :' + todoObj);
-    todoObj.save(function(err) { cb(err, convertOutput(todoObj)); });
+function createOrUpdate(req, record, cb) {
+  var body = req.body;
+  if(body && body['todo']) {
+    body = body.todo;
   }
+  var query = req.query;
+  if(query && query['todo']) {
+    query = query.todo;
+  }
+  var params = _.extend(query, body);
+  console.log('... inside create or update ...');
+  var title = params['title'];
+  var isDone = params['isDone'];
+  var order = params['order'];
+
+  if(!record) {
+    record = new Todo( {title:title} );
+    console.log(' creating :' + record);
+  }
+  if(title) record.title = title;
+  if(isDone) record.isDone = isDone;
+  if(order) record.order = order;
+  console.log(' updating :' + record);
+  record.save(function(err) { cb(err, convertOutput(record)); });
 } 
 

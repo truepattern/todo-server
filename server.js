@@ -28,6 +28,7 @@ function errorHandlers() {
   // in order, but ONLY those with an arity of 4, ignoring
   // regular middleware.
   app.use(function(err, req, res, next){
+      //console.log(err);
       if(req.accepts('html')) {
         res.status(err.status || 500);
         res.render('500', { error: err });
@@ -40,6 +41,7 @@ function errorHandlers() {
   // it will be the last middleware called, if all others
   // invoke next() and do not respond.
   app.use(function(req, res) {
+      //console.log('Failed to locate:'+req.url);
       if(req.accepts('html')) {
         res.status(404);
         res.render('404', { url: req.url });
@@ -57,7 +59,7 @@ function preHandlers() {
   if(config.api.keycheck) {
     console.log("Keycheck to API's installed");
     // here we validate the API key 
-    app.use('/api', function(req, res, next){
+    app.all('/api/*', function(req, res, next){
         var key = req.query[config.api.KEYNAME] || req.body[config.api.KEYNAME];
         
         // key isnt present
@@ -71,6 +73,20 @@ function preHandlers() {
         next();
       });
   }
+
+  // jsonp support for delete, put & post (partial post)
+  if(config.server.jsonp) {
+    // check if callback is there along with method
+    app.all('/api/*', function(req, res, next) {
+        if(req.query && req.query['callback'] && req.query['_method']) {
+          // lets rewrite the method, especially PUT/DELETE/POST
+          req.method=req.query['_method'];
+          console.log(req.query);
+        }
+        next();
+      });
+  }
+
 }
 
 
@@ -138,16 +154,25 @@ app.configure(function() {
   });
 
 
-app.all('/api', function(req,res,next) {
+var api = {
+  index: function(req,res) {
     var obj={app:config.app.title, version:config.app.version};
     res.json(obj);
-  });
+  }
+};
+
+var apiresource = app.resource('api', api);
+
+//console.log(apibase);
+global.apiresource = apiresource;
 // init all the modules configured (api routes)
 for(var i=0;i<config.server.modules.length;i++) {
   console.log('loading module ... ' + config.server.modules[i]);
   var m='./apps/'+config.server.modules[i]+'/urls';
   require(m);
 }
+
+//console.log(app.resources['api/todos'].routes);
 
 // init the server
 if (!module.parent) {

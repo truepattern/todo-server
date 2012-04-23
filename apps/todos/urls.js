@@ -1,2 +1,4 @@
 require('./models');
-var todo = app.resource('api/todos', require('./controllers'));
+
+var todo = app.resource('todos', require('./controllers'));
+apiresource.add(todo);
