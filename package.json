@@ -8,9 +8,6 @@
     "aonx"             : ">= 0.0.5",
     "jade"             : ">= 0.0.1",
 
-    "express"          : ">= 0.0.1",
-    "express-resource" : ">= 0.0.1",
-
     "mongoose"         : ">= 2.5.7",
     "mongoose-types"   : ">= 1.0.3"
 
