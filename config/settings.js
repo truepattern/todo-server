@@ -18,6 +18,8 @@ config.api.keycheck = false;
 // server related settings
 config.server =  {};
 config.server.port = process.env.PORT || 8080;
+config.server.path = __dirname + '/..';
+config.server.views= config.server.path + '/views';
 config.server.modules = [
   'todos'
 ];
