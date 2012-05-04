@@ -4,22 +4,12 @@
 var config        = require('./config/settings.js');
 var aonx          = require('aonx');
 
-
 // init the server
 aonx.init(config);
 
 global.app=aonx.app;
 global.config=config;
-
-var api = {
-  index: function(req,res) {
-    var obj={app:config.app.title, version:config.app.version};
-    res.json(obj);
-  }
-};
-
-var apiresource = app.resource('api', api);
-global.apiresource = apiresource;
+global.apiresource = aonx.apiresource;
 
 // init all the modules configured (api routes)
 for(var i=0;i<config.server.modules.length;i++) {
