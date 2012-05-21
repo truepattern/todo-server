@@ -1,3 +1,3 @@
 # Todo List
-* cleanup README
-* AAA (Authentication, Authorization, Access Control)
+  * cleanup README
+  * AAA (Authentication, Authorization, Access Control)

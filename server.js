@@ -14,7 +14,5 @@ for(var i=0;i<config.server.modules.length;i++) {
   require(m);
 }
 
-// init the server
-if (!module.parent) {
-  aonx.run();
-}
+// run the server
+aonx.run();

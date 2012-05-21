@@ -1,0 +1,38 @@
+# spec for curl testing
+
+#GET     /forums              ->  index
+#GET     /forums/new          ->  new
+#POST    /forums              ->  create
+#GET     /forums/:forum       ->  show
+#GET     /forums/:forum/edit  ->  edit
+#PUT     /forums/:forum       ->  update
+#DELETE  /forums/:forum       ->  destroy
+
+For todo's, following are the items that i want to do
+
+module = todos
+url = /forums
+# verify creation
+title = 'sample todo'
+# return value expected is
+res={ ... id='<newid>' }
+--> have $id
+
+# verify in list
+# index
+# verify {title, res.id}
+
+# edit $id
+
+
+MODULE todos
+url /todos
+# verify todo list
+index :url
+
+send (url, command, headers, object)
+result (status, headers, object)
+expected(status, headers, object)
+
+object = { 'title' = 'Hello World' };
+crud => (url, object)
