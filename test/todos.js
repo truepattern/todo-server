@@ -13,7 +13,7 @@ describe('todos - API server verification', function() {
       done();
     });
   });
-  describe('general queries', function() {
+  describe('/general queries', function() {
     it('/api', function(done) {
       berry.request.get(serverUrl).end(function(res) {
         var versionObj = {version:'0.1.0'};  // just verify the version
@@ -25,10 +25,7 @@ describe('todos - API server verification', function() {
   });
   var url = serverUrl + '/v1/todos';
   var todoObj = {title:'Hello Todo'};
-  var crudfn = berry.crudTester(url, todoObj);
-  describe('CRUD checks', crudfn);
-  /*
-    //beforeEach
-    //afterEach
-  */
+  var todoObj1 = {title:'Updated Hello Todo'};
+  var crudfn = berry.crudTester(url, todoObj, todoObj1);
+  describe('/CRUD tests', crudfn);
 });
