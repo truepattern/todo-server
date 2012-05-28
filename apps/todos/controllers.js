@@ -6,11 +6,11 @@ exports.index = function(req, res){
 };
 
 exports.new = function(req, res){
-  Todo.updateObject(new Todo(), req, res);
+  Todo.createObject(req, res);
 };
 
 exports.create = function(req, res){
-  Todo.updateObject(new Todo(), req, res);
+  Todo.createObject(req, res);
 };
 
 exports.show = function(req, res){
