@@ -1,12 +1,12 @@
 {
   "name": "todo-service", 
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "underscore"       : ">= 1.3.0",
 
-    "aonx"             : ">= 0.1.1",
-    "jade"             : ">= 0.0.1",
+    "aonx"             : ">= 0.1.3",
+    "jade"             : ">= 0.26.1",
 
     "mongoose"         : ">= 2.5.7",
     "mongoose-types"   : ">= 1.0.3"

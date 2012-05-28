@@ -7,7 +7,7 @@ var aonx          = require('aonx');
 // init the server
 aonx.init(config);
 
-// init all the modules configured (api routes)
+// init the 'todo' module 
 for(var i=0;i<config.server.modules.length;i++) {
   console.log('loading module ... ' + config.server.modules[i]);
   var m='./apps/'+config.server.modules[i]+'/urls';

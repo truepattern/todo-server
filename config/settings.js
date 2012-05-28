@@ -6,7 +6,7 @@ var config = {};
 // application data
 config.app = {};
 config.app.title = 'Todos Server';
-config.app.version = '0.1.0';
+config.app.version = '0.1.1';
 config.app.key = 'todos';
 config.app.secret = 'XoB_kCoL';
   

@@ -16,7 +16,7 @@ describe('todos - API server verification', function() {
   describe('/general queries', function() {
     it('/api', function(done) {
       berry.request.get(serverUrl).end(function(res) {
-        var versionObj = {version:'0.1.0'};  // just verify the version
+        var versionObj = {version:'0.1.1'};  // just verify the version
         //console.log('res:'+JSON.stringify(res.body));
         berry.assert.ok(berry.checkObject(versionObj, res.body), 'response mismatch');
         done();
