@@ -6,8 +6,8 @@ var mongoose = require('mongoose'),
 
 /* schema definitions go here */
 var Todo = new Schema({
-    title  : { type:String, required:true, index: true },
-    isDone : { type:Boolean, default: false  },
+    content  : { type:String, required:true, index: true },
+    done : { type:Boolean, default: false  },
     order  : Number
   });
 
