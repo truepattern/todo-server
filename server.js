@@ -14,5 +14,10 @@ for(var i=0;i<config.server.modules.length;i++) {
   require(m);
 }
 
+// lets route default to index.html
+app.get('/', function(req, res) {
+  res.redirect('/index.html');
+});
+
 // run the server
 aonx.run();
