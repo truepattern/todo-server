@@ -35,5 +35,13 @@ config.db = {};
 config.db.enabled=true;
 config.db.url = 'mongodb://localhost:27017/todos';
 
+// production settings 
+if(global.process.env.NODE_ENV == 'production') {
+  // this is for heroku
+  if(global.process.env.MONGOHQ_URL) {
+    config.db.url=global.process.env.MONGOHQ_URL;
+  }
+}
+
 // export the config
 module.exports = config;
